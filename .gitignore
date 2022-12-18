@@ -20,7 +20,7 @@ db/migrations/**/*.md
 .DS_Store
 
 # local env files
-.env.local
+#.env.local
 .env.*.local
 .envrc
 
