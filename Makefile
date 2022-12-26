@@ -14,3 +14,11 @@ migrate:
 .PHONY: run
 run:
 	npm run dev
+
+
+.PHONY: build-image
+build-image:
+	docker build \
+		-t sbcntr-frontend \
+		-f Dockerfile.darwin_arm64 \
+		.

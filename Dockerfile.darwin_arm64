@@ -2,7 +2,7 @@ FROM node:14.16 AS builder
 WORKDIR /app
 
 # Add libvips
-RUN apt update && apt install -y libvips-dev
+RUN apt update && apt install -y libvips-dev openssl
 COPY . .
 
 # install production dependencies
@@ -22,6 +22,7 @@ RUN yarn build
 
 FROM node:14.16-slim
 WORKDIR /app
+RUN apt update && apt install -y openssl
 
 COPY --from=builder /tmp/node_modules ./node_modules
 COPY --from=builder /app/.blitz ./.blitz
