@@ -19,7 +19,7 @@ services:
       start_period: 1s
     ports:
       - 3306:3306
-  app:
+  backend:
     image: sbcntr-backend:latest
     depends_on:
       db:
@@ -32,3 +32,19 @@ services:
       DB_NAME: sbcntrapp
     ports:
       - 3200:80
+  frontend:
+    image: sbcntr-frontend:latest
+    depends_on:
+      db:
+        condition: service_healthy
+    container_name: sbcntr-frontend
+    environment:
+      DB_HOST: db
+      DB_USERNAME: sbcntruser
+      DB_PASSWORD: sbcntrpass
+      DB_NAME: sbcntrapp
+      SESSION_SECRET_KEY: 41b678c65b37bf99c37bcab522802760
+      APP_SERVICE_HOST: "http://backend"
+      NOTIF_SERVICE_HOST: "http://backend"
+    ports:
+      - 3100:80
